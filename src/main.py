@@ -1,9 +1,11 @@
 import flet as ft;
-from ui import UI;
+from game import Game;
 
 def main(page):
-    UI(page);
+   Game(page)
     
-
+#if __name__ == "__main__":
+  #game = Game(None);
+  
 ft.app(main);
 
