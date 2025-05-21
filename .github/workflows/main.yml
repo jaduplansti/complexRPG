@@ -1,4 +1,4 @@
-name: Build Flet APK and Upload to Release
+name: Build Flet APK and Upload to Auto Tag Release
 
 on:
   workflow_dispatch:
@@ -22,15 +22,21 @@ jobs:
     - name: Build APK
       run: flet build apk
 
-    - name: Find APK file
-      id: find_apk
+    - name: Locate APK
+      id: locate_apk
       run: |
         APK_PATH=$(find build -name "*.apk" | head -n 1)
         echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
 
-    - name: Upload APK to Release
+    - name: Generate tag name
+      id: tag
+      run: echo "tag_name=v$(date +'%Y-%m-%d-%H%M')" >> $GITHUB_OUTPUT
+
+    - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
-        files: ${{ steps.find_apk.outputs.apk_path }}
+        tag_name: ${{ steps.tag.outputs.tag_name }}
+        name: Release ${{ steps.tag.outputs.tag_name }}
+        files: ${{ steps.locate_apk.outputs.apk_path }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
