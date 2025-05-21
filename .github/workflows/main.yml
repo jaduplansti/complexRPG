@@ -1,0 +1,36 @@
+name: Build Flet APK and Upload to Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install Flet
+      run: pip install flet
+
+    - name: Build APK
+      run: flet build apk
+
+    - name: Find APK file
+      id: find_apk
+      run: |
+        APK_PATH=$(find build -name "*.apk" | head -n 1)
+        echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
+
+    - name: Upload APK to Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: ${{ steps.find_apk.outputs.apk_path }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
