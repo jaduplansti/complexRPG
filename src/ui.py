@@ -110,11 +110,21 @@ class UI:
       pass;
     return self.input;
   
+  def awaitInput(self, clear = False):
+    self.print("enter anyting to continue!", color = ft.Colors.RED);
+    _ = self.getInput();
+    if clear is True: self.clear();
+
   def clearPrevLine(self):
-    self.output.current.controls.pop();
-    
+    if self.page != None: self.output.current.controls.pop();
+    self.page.update();
+
+  def clear(self):
+    if self.page != None: self.output.current.controls.clear();
+    self.page.update();
+
   def onFieldSubmit(self, e):
-    self.print(e.control.value);
+    if e.control.value != "": self.print(f"> {e.control.value}");
     self.input = e.control.value;
 
     e.control.value = "";
