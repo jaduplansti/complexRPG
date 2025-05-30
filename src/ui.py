@@ -30,7 +30,7 @@ class UI:
     self.page.add(
         ft.SafeArea(  
             ft.Column(
-                spacing=20,
+                spacing=12,
                 controls=[
                     ft.Container(
                         content=ft.ListView(
