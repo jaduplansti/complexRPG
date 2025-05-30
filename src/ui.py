@@ -28,49 +28,51 @@ class UI:
     neon_shadow = ft.Colors.with_opacity(0.5, neon_purple)
 
     self.page.add(
-      ft.Column(
-        spacing=20,
-        controls=[
-          ft.Container(
-            content=ft.ListView(
-              ref=self.output,
-              auto_scroll=True,
-            ),
-            expand=True,
-            height=self.page.height * 0.85,
-            bgcolor="#111111",  
-            border_radius=10,
-            padding=20,
-            border=ft.border.all(2, neon_blue),
-            shadow=ft.BoxShadow(
-              blur_radius=15,
-              color=neon_shadow,
-              offset=ft.Offset(0, 0),
-              spread_radius=2
+        ft.SafeArea(  
+            ft.Column(
+                spacing=20,
+                controls=[
+                    ft.Container(
+                        content=ft.ListView(
+                            ref=self.output,
+                            auto_scroll=True,
+                        ),
+                        expand=True,
+                        height=self.page.height * 0.85,
+                        bgcolor="#111111",
+                        border_radius=10,
+                        padding=20,
+                        border=ft.border.all(2, neon_blue),
+                        shadow=ft.BoxShadow(
+                            blur_radius=15,
+                            color=neon_shadow,
+                            offset=ft.Offset(0, 0),
+                            spread_radius=2
+                        )
+                    ),
+                    ft.TextField(
+                        ref=self.field,
+                        hint_text="> Enter command...",
+                        text_style=ft.TextStyle(
+                            color=neon_green,
+                            font_family="Courier New",
+                            size=16,
+                        ),
+                        bgcolor="#1a1a1a",
+                        border_color=neon_green,
+                        border_width=2,
+                        cursor_color=neon_green,
+                        focused_border_color=neon_blue,
+                        height=50,
+                        on_submit=self.onFieldSubmit,
+                        hint_style=ft.TextStyle(
+                            color=ft.Colors.with_opacity(0.4, neon_green),
+                            font_family="Courier New"
+                        )
+                    ),
+                ]
             )
-          ),
-          ft.TextField(
-            ref=self.field,
-            hint_text="> Enter command...",
-            text_style=ft.TextStyle(
-              color=neon_green,
-              font_family="Courier New",
-              size=16,
-            ),
-            bgcolor="#1a1a1a",
-            border_color=neon_green,
-            border_width=2,
-            cursor_color=neon_green,
-            focused_border_color=neon_blue,
-            height=50,
-            on_submit=self.onFieldSubmit,
-            hint_style=ft.TextStyle(
-              color=ft.Colors.with_opacity(0.4, neon_green),
-              font_family="Courier New"
-            )
-          ),
-        ]
-      )
+        )
     )
 
   def print(self, msg, color = ft.Colors.WHITE):
